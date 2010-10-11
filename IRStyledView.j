@@ -9,7 +9,7 @@
 	
 @implementation IRStyledView : CPView {
 
-	CPView backgroundView;
+	CPView backgroundView @accessors(readonly);
 	CPView contentView @accessors(readonly);
 	
 }
