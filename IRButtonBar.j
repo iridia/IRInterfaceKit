@@ -90,6 +90,7 @@
 	
 	[leftButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton setAutoresizingMask:CPViewMaxXMargin];
 	[self setNeedsLayout];
 	
 }
@@ -121,6 +122,7 @@
 	
 	[centerButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton setAutoresizingMask:CPViewMinXMargin|CPViewMaxXMargin];
 	[self setNeedsLayout];
 	
 }
@@ -152,6 +154,7 @@
 	
 	[rightButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton setAutoresizingMask:CPViewMinXMargin];
 	
 	[self setNeedsLayout];
 	
