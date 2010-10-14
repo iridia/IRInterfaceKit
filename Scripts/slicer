@@ -77,6 +77,10 @@ slice IRPlasticyPopUpButton.backdrop.disabled.png 0 32 0 16
 slice IRThickBlueyStrip.backdrop.png 16 16 16 16
 slice IRRecessedNavyBox.backdrop.png 24 24 24 24
 
+slice IRPlasticySquareButton.backdrop.png 16 16 16 16
+slice IRPlasticySquareButton.backdrop.active.png 16 16 16 16
+slice IRPlasticySquareButton.backdrop.disabled.png 16 16 16 16
+
 
 
 

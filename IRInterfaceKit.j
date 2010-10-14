@@ -61,6 +61,7 @@
 	
 	@import "IRTactileButton.j"	
 	@import "IRPlasticyButton.j"
+	@import "IRPlasticySquareButton.j"
 	@import "IRPlasticyPopUpButton.j"
 	@import "IRButtonBar.j"
 	@import "IRStripedBar.j"
