@@ -99,6 +99,7 @@
 	if (self == nil) return nil;
 	
 	[self setImage:[CPImage imageNamed:@"IRInterfaceKit.common.add.mini.png" inBundleOf:self]];
+	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.add.mini.disabled.png" inBundleOf:self] forThemeAttribute:@"image" inState:CPThemeStateDisabled];
 	[self setValue:CPImageOnly forThemeAttribute:@"image-position"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"min-size"];
@@ -114,6 +115,7 @@
 	if (self == nil) return nil;
 	
 	[self setImage:[CPImage imageNamed:@"IRInterfaceKit.common.minus.mini.png" inBundleOf:self]];
+	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.minus.mini.disabled.png" inBundleOf:self] forThemeAttribute:@"image" inState:CPThemeStateDisabled];
 	[self setValue:CPImageOnly forThemeAttribute:@"image-position"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"min-size"];
