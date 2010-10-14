@@ -23,6 +23,7 @@
 	@import "IRStyledView.j"
 	@import "IRDarkSunkenView.j"
 	@import "IRRecessedInnerShadowedView.j"
+	@import "IRRecessedLightInnerShadowedView.j"
 	@import "IRBeigeBox.j"
 	@import "IRBubbleBox.j"
 	@import "IRYellowBox.j"
