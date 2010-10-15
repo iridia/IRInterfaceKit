@@ -75,6 +75,7 @@
 	while (object = [enumerator nextObject]) {
 
 		[leftButtons removeObject:object];
+		[object removeObserver:self forKeyPath:@"hidden"];
 		[object removeFromSuperview];
 	
 	}
@@ -90,6 +91,7 @@
 	
 	[leftButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton addObserver:self forKeyPath:@"hidden" options:null context:null];
 	[aButton setAutoresizingMask:CPViewMaxXMargin];
 	[self setNeedsLayout];
 	
@@ -107,6 +109,7 @@
 	while (object = [enumerator nextObject]) {
 
 		[centerButtons removeObject:object];
+		[object removeObserver:self forKeyPath:@"hidden"];
 		[object removeFromSuperview];
 	
 	}
@@ -122,6 +125,7 @@
 	
 	[centerButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton addObserver:self forKeyPath:@"hidden" options:null context:null];
 	[aButton setAutoresizingMask:CPViewMinXMargin|CPViewMaxXMargin];
 	[self setNeedsLayout];
 	
@@ -139,6 +143,7 @@
 	while (object = [enumerator nextObject]) {
 
 		[rightButtons removeObject:object];
+		[object removeObserver:self forKeyPath:@"hidden"];
 		[object removeFromSuperview];
 	
 	}
@@ -154,6 +159,7 @@
 	
 	[rightButtons addObject:aButton];
 	[self addSubview:aButton];
+	[aButton addObserver:self forKeyPath:@"hidden" options:null context:null];
 	[aButton setAutoresizingMask:CPViewMinXMargin];
 	
 	[self setNeedsLayout];
@@ -318,6 +324,18 @@
 	if ([[self delegate] respondsToSelector:@selector(buttonBar:didReceiveActionFromButton:)])
 	[[self delegate] buttonBar:self didReceiveActionFromButton:sender];
 	
+}
+
+
+
+
+
+- (void) observeValueForKeyPath:(CPString)inKeyPath ofObject:(id)inObject change:(CPDictionary)inChange context:(id)inContext {
+	
+	CPLog(@"observeValueForKeyPath:%@ ofObject:%@ change:%@ context:%@", inKeyPath, inObject, inChange, inContext);
+	
+	[self setNeedsLayout];
+
 }
 
 
