@@ -332,8 +332,7 @@
 
 - (void) observeValueForKeyPath:(CPString)inKeyPath ofObject:(id)inObject change:(CPDictionary)inChange context:(id)inContext {
 	
-	CPLog(@"observeValueForKeyPath:%@ ofObject:%@ change:%@ context:%@", inKeyPath, inObject, inChange, inContext);
-	
+	if (inKeyPath == @"hidden")
 	[self setNeedsLayout];
 
 }
