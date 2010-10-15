@@ -91,9 +91,9 @@
 
 	}]];
 	
-	[backgroundAnimation setAnimationCurve:CPAnimationEaseInOut];
+	[backgroundAnimation setAnimationCurve:CPAnimationEaseOut];
 	[backgroundAnimation setDuration:.125];
-	[backgroundAnimation setShouldUseCSSAnimations:YES];
+	[backgroundAnimation setShouldUseCSSAnimations:NO];
 
 	[backgroundAnimation startAnimation];
 
@@ -122,7 +122,7 @@
 	
 	[backgroundAnimation setAnimationCurve:CPAnimationEaseInOut];
 	[backgroundAnimation setDuration:.25];
-	[backgroundAnimation setShouldUseCSSAnimations:YES];
+	[backgroundAnimation setShouldUseCSSAnimations:NO];
 	[backgroundAnimation startAnimation];
 	
 	[sheetHostingWindow._irShadeWindow performSelector:@selector(orderOut:) withObject:self afterDelay:.26];
