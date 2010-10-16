@@ -76,6 +76,7 @@
 //	Interactivity
 	
 	@import "IRMouseView.j"
+	@import "IRImageView.j"
 	@import "IRActionSheetController.j"
 	
 	
