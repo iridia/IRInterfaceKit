@@ -23,6 +23,14 @@
 	CGSize contentSize;
 	BOOL contentWantsFullLayout @accessors;
 	
+	CPArray actionControllers;
+	
+}
+
+- (void) enqueueActionController:(CPViewController)inController {
+	
+	//	TODO: Implement
+	
 }
 
 - (void) loadWindow {
