@@ -29,8 +29,19 @@
 }
 
 - (IBAction) handleSelectableToolbarClick:(id)sender {
+
+	var item = [self toolbarItemForToolbarItemOrSubstitutedMenuItem:sender];
 	
-	var associatedViewController = [[self delegate] viewControllerClassForToolbarItemWithIdentifier:[sender itemIdentifier]];
+	var enumerator = [_items objectEnumerator], object = nil;
+	while (object = [enumerator nextObject])
+	if ([object isKindOfClass:[IRSelectableToolbarItem class]])
+	[object setVisibilityPriority:CPToolbarItemVisibilityPriorityHigh];
+	
+	[item setVisibilityPriority:CPToolbarItemVisibilityPriorityUser];
+	[_toolbarView tile];
+	
+	
+	var associatedViewController = [[self delegate] viewControllerClassForToolbarItemWithIdentifier:[item itemIdentifier]];
 	
 	if ([self selectedViewControllerClass] == associatedViewController) return;
 		
@@ -39,17 +50,8 @@
 //	Nudge the toolbar view handlerhere
 	[self _toolbarView];
 	
-	var itemViewFrame = [[_toolbarView viewForItem:sender] frame];
-	
-	[selectedItemBackdrop setFrameOrigin:itemViewFrame.origin];
-	[selectedItemBackdrop setFrameSize:CGSizeMake(
-	
-		itemViewFrame.size.width,
-		[selectedItemBackdrop frame].size.height
+	[_toolbarView yieldBackdropForItem:item];
 		
-	)];
-	[selectedItemBackdrop setHidden:NO];
-	
 	if ([[self delegate] respondsToSelector:@selector(toolbar:didSelectViewControllerClass:)])
 	[[self delegate] toolbar:self didSelectViewControllerClass:[self selectedViewControllerClass]];
 	
@@ -61,15 +63,44 @@
 
 - (CPView) _toolbarView {
 
-	if (!selectedItemBackdrop)
-	selectedItemBackdrop = [[IRSelectableToolbarItemBackdropView alloc] initWithFrame:CGRectMake(0, 0, 128, [[super _toolbarView] frame].size.height)];
-//	[selectedItemBackdrop setBackgroundColor:[CPColor redColor]];
-	[selectedItemBackdrop setHidden:YES];
+	if (!_toolbarView) {
 
-	[super _toolbarView];
+		_toolbarView = [[IRSelectableToolbarView alloc] initWithFrame:CPRectMake(0.0, 0.0, 1200.0, 59.0)];
+		[_toolbarView setToolbar:self];
+		[_toolbarView setAutoresizingMask:CPViewWidthSizable];
+		[_toolbarView reloadToolbarItems];
 	
-	[_toolbarView addSubview:selectedItemBackdrop positioned:CPWindowBelow relativeTo:nil];
+	}
 
+}
+
+- (CPToolbarItem) toolbarItemForToolbarItemOrSubstitutedMenuItem:(id)inItem {
+	
+	if ([inItem isKindOfClass:[CPMenuItem class]]) {
+		
+		var itemIndexInMenu = [[[_toolbarView additionalItemsButton] itemArray] indexOfObject:inItem] - 1,
+		var itemsToMatch = [[_toolbarView invisibleItems] mutableCopy];
+		var enumerator = [[_toolbarView invisibleItems] objectEnumerator], object = nil;
+		
+		if (itemIndexInMenu == -2)
+		return nil;
+		
+		while (object = [enumerator nextObject])
+		if ([object itemIdentifier] === CPToolbarSpaceItemIdentifier || [object itemIdentifier] === CPToolbarFlexibleSpaceItemIdentifier)
+		[itemsToMatch removeObject:object];
+
+		return [itemsToMatch objectAtIndex:itemIndexInMenu];
+	
+	} else if ([inItem isKindOfClass:[CPToolbarItem class]]) {
+	
+		return inItem;
+		
+	} else {
+
+		return nil;
+		
+	}
+	
 }
 
 @end
@@ -77,6 +108,96 @@
 
 
 
+
+@implementation IRSelectableToolbarView : _CPToolbarView {
+	
+	CPView selectedItemBackdrop;
+	CPToolbarItem selectedItem;
+	
+}
+	
+- (void) tile {
+	
+	CPLog(@"tile is called when selectedItem is %@", selectedItem);
+	
+	[super tile];
+	
+	if (selectedItem) {
+
+		[self yieldBackdropForItem:selectedItem];
+	
+	}
+	
+}
+
+
+
+
+
+//	This button is exposed so we can see which toolbar item is represented by the menu item
+//	and get the identifier so we can associate with a view controller
+
+- (CPPopUpButton) additionalItemsButton {
+
+	return _additionalItemsButton;
+
+}
+
+- (CPArray) invisibleItems {
+
+	return _invisibleItems;
+
+}
+
+
+
+
+
+- (void) yieldBackdropForItem:(CPToolbarItem)inItem {
+	
+	selectedItem = [[self toolbar] toolbarItemForToolbarItemOrSubstitutedMenuItem:inItem];
+
+	CPLog(@"yieldBackdropForItem for item", selectedItem);
+	
+	if (!selectedItemBackdrop) {
+
+		selectedItemBackdrop = [[IRSelectableToolbarItemBackdropView alloc] initWithFrame:CGRectMake(0, 0, 128, [self frame].size.height)];
+
+		[selectedItemBackdrop setHidden:YES];
+
+		[self addSubview:selectedItemBackdrop positioned:CPWindowBelow relativeTo:nil];
+	
+	}
+	
+	
+	[selectedItemBackdrop setHidden:NO];
+	
+	var itemView = [self viewForItem:selectedItem];
+	if (!itemView) {
+	
+		CPLog(@"itemView is nil, hiding backdrop");
+	
+	//	The item is in a “more” menu
+		[selectedItemBackdrop setHidden:YES];
+		return;
+		
+	}
+	
+	var itemViewFrame = [[self viewForItem:selectedItem] frame];
+	
+	[selectedItemBackdrop setFrameOrigin:itemViewFrame.origin];
+	[selectedItemBackdrop setFrameSize:CGSizeMake(
+	
+		itemViewFrame.size.width,
+		[selectedItemBackdrop frame].size.height
+		
+	)];
+	
+	[selectedItemBackdrop setHidden:[[self viewForItem:selectedItem] isHidden]];
+	
+}
+	
+@end
 
 @implementation IRSelectableToolbarItem : CPToolbarItem {
 	
@@ -117,9 +238,6 @@
 	[backgroundView centerVerticallyInSuperview];
 	
 	[backgroundView setBackgroundColor:[CPColor colorWithPatternImage:[CPThreePartImage imageWithBaseName:@"IRSelectableToolbar.item.backdrop.active" inBundleOf:self withInset:CGInsetMake(0.0, 32.0, 0.0, 32.0) thickness:48.0 vertical:NO]]];
-	
-	CGRectDump(inFrame, @"frame to work with the item");
-	CGRectDump([backgroundView frame], @"background view frame");
 	
 	return self;
 	
