@@ -74,7 +74,8 @@
 	
 
 //	Interactivity
-	
+
+	@import "IRSelectableToolbar.j"
 	@import "IRMouseView.j"
 	@import "IRImageView.j"
 	@import "IRActionSheetController.j"
