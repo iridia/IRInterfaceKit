@@ -113,7 +113,10 @@
 	if (self == nil) return nil;
 	
 	[self setImage:[CPImage imageNamed:@"IRInterfaceKit.common.add.mini.png" inBundleOf:self]];
+	
+	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.add.mini.png" inBundleOf:self] forThemeAttribute:@"image"];
 	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.add.mini.disabled.png" inBundleOf:self] forThemeAttribute:@"image" inState:CPThemeStateDisabled];
+	
 	[self setValue:CPImageOnly forThemeAttribute:@"image-position"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"min-size"];
@@ -129,7 +132,10 @@
 	if (self == nil) return nil;
 	
 	[self setImage:[CPImage imageNamed:@"IRInterfaceKit.common.minus.mini.png" inBundleOf:self]];
+
+	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.minus.mini.png" inBundleOf:self] forThemeAttribute:@"image"];
 	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.minus.mini.disabled.png" inBundleOf:self] forThemeAttribute:@"image" inState:CPThemeStateDisabled];
+
 	[self setValue:CPImageOnly forThemeAttribute:@"image-position"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"min-size"];
@@ -145,8 +151,12 @@
 	if (self == nil) return nil;
 	
 	[self setImage:[CPImage imageNamed:@"IRInterfaceKit.common.locate.mini.png" inBundleOf:self]];
+
+	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.locate.mini.png" inBundleOf:self] forThemeAttribute:@"image"];
 	[self setValue:[CPImage imageNamed:@"IRInterfaceKit.common.locate.mini.disabled.png" inBundleOf:self] forThemeAttribute:@"image" inState:CPThemeStateDisabled];
+	
 	[self setValue:CPImageOnly forThemeAttribute:@"image-position"];
+	
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"min-size"];
 	[self setValue:CGSizeMake(24.0, 24.0) forThemeAttribute:@"max-size"];
@@ -155,4 +165,28 @@
 	
 }
 
+
+
+
+
+- (void) layoutSubviews {
+	
+	[super layoutSubviews];
+
+//	I don’t know why this is broken in edge Cappuccino.
+	var contentView = _ephemeralSubviewsForNames[@"content-view"];
+	
+	if (contentView && [self valueForThemeAttribute:@"image"])
+	[contentView setImage:[self currentValueForThemeAttribute:@"image"]];
+	
+}
+
+
+
+
+
 @end
+
+
+
+
