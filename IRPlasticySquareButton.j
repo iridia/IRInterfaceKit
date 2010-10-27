@@ -21,6 +21,20 @@
 
 
 
++ (id) themeAttributes {
+	
+	var attributes = [[super themeAttributes] mutableCopy];
+	if (![attributes isKindOfClass:[CPDictionary class]]) return attributes;
+	
+	[attributes setObject:[CPNull null] forKey:@"image"];
+	
+	return attributes;
+	
+}
+
+
+
+
 + (CGInset) insetsForStyle:(IRPlasticyButtonStyle)style {
 	
 	switch (style) {
