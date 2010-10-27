@@ -12,13 +12,40 @@
 	
 }
 
+- (CPArray) selectableItems {
+	
+	var	responseArray = [CPMutableArray array],
+		enumerator = [_items objectEnumerator], 
+		object = nil;
+		
+	while (object = [enumerator nextObject])
+	if ([object isKindOfClass:[IRSelectableToolbarItem class]])
+	if ([[self delegate] viewControllerClassForToolbarItemWithIdentifier:[object itemIdentifier]] != nil)
+	[responseArray addObject:object];
+	
+	return responseArray;
+
+}
+
+- (void) activateSelectableItemAtIndex:(int)inIndex {
+	
+	var itemToInvoke = [[self selectableItems] objectAtIndex:inIndex];
+	if (!itemToInvoke) return;
+	
+	[[itemToInvoke target] performSelector:[itemToInvoke action] withObject:itemToInvoke];
+	
+}
+
+
+
+
+
 - (void) _reloadToolbarItems {
 	
 	[super _reloadToolbarItems];
 	
-	var enumerator = [_items objectEnumerator], object = nil;
+	var enumerator = [[self selectableItems] objectEnumerator], object = nil;
 	while (object = [enumerator nextObject])
-	if ([object isKindOfClass:[IRSelectableToolbarItem class]])
 	if ([[self delegate] viewControllerClassForToolbarItemWithIdentifier:[object itemIdentifier]] != nil) {
 
 		[object setTarget:self];
@@ -32,9 +59,8 @@
 
 	var item = [self toolbarItemForToolbarItemOrSubstitutedMenuItem:sender];
 	
-	var enumerator = [_items objectEnumerator], object = nil;
+	var enumerator = [[self selectableItems] objectEnumerator], object = nil;
 	while (object = [enumerator nextObject])
-	if ([object isKindOfClass:[IRSelectableToolbarItem class]])
 	[object setVisibilityPriority:CPToolbarItemVisibilityPriorityHigh];
 	
 	[item setVisibilityPriority:CPToolbarItemVisibilityPriorityUser];
@@ -78,7 +104,7 @@
 	
 	if ([inItem isKindOfClass:[CPMenuItem class]]) {
 		
-		var itemIndexInMenu = [[[_toolbarView additionalItemsButton] itemArray] indexOfObject:inItem] - 1,
+		var itemIndexInMenu = [[[_toolbarView additionalItemsButton] itemArray] indexOfObject:inItem] - 1;
 		var itemsToMatch = [[_toolbarView invisibleItems] mutableCopy];
 		var enumerator = [[_toolbarView invisibleItems] objectEnumerator], object = nil;
 		
@@ -157,8 +183,6 @@
 	
 	selectedItem = [[self toolbar] toolbarItemForToolbarItemOrSubstitutedMenuItem:inItem];
 
-	CPLog(@"yieldBackdropForItem for item", selectedItem);
-	
 	if (!selectedItemBackdrop) {
 
 		selectedItemBackdrop = [[IRSelectableToolbarItemBackdropView alloc] initWithFrame:CGRectMake(0, 0, 128, [self frame].size.height)];
@@ -174,8 +198,6 @@
 	
 	var itemView = [self viewForItem:selectedItem];
 	if (!itemView) {
-	
-		CPLog(@"itemView is nil, hiding backdrop");
 	
 	//	The item is in a “more” menu
 		[selectedItemBackdrop setHidden:YES];
