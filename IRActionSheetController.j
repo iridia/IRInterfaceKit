@@ -178,9 +178,9 @@
 	
 	contentSize = CGSizeMake(CGRectGetWidth([contentView frame]), CGRectGetHeight([contentView frame]));
 	
-	if (!contentWantsFullLayout) return;
+	[contentWrapperView setPageScroll:0.0];
 	
-	[contentView setFrame:CGRectMake(
+	if (contentWantsFullLayout) [contentView setFrame:CGRectMake(
 	
 		0, 0,
 		CGRectGetWidth([contentWrapperView frame]),
