@@ -52,7 +52,6 @@
 	
 	
 	contentWrapperView = [[IRSkinnyScrollView alloc] initWithFrame:CGRectMake(0, 0, 512, 512)];
-	[contentWrapperView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 	[[[self window] contentView] setContentView:contentWrapperView];
 	[contentWrapperView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 
@@ -174,19 +173,21 @@
 - (void) setContentView:(CPView)inContentView {
 	
 	[contentWrapperView setDocumentView:inContentView];
-	contentView = inContentView;
-	
-	contentSize = CGSizeMake(CGRectGetWidth([contentView frame]), CGRectGetHeight([contentView frame]));
-	
 	[contentWrapperView setPageScroll:0.0];
 	
-	if (contentWantsFullLayout) [contentView setFrame:CGRectMake(
+	contentView = inContentView;
+	var contentWrapperSize = [contentWrapperView frame].size;
 	
-		0, 0,
-		CGRectGetWidth([contentWrapperView frame]),
-		CGRectGetHeight([contentWrapperView frame])
+	if (contentWantsFullLayout) {
 		
-	)];
+		[contentView setFrame:CGRectMake(0, 0, contentWrapperSize.width, contentWrapperSize.height)];
+		[contentView setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
+		
+	} else {
+		
+		[contentView setAutoresizingMask:null];
+		
+	}
 	
 }
 
@@ -202,69 +203,51 @@
 
 - (void) resizeSheetToFitDocumentView {
 
-	[[CPRunLoop currentRunLoop] limitDateForMode:CPDefaultRunLoopMode];	
 	[self resizeSheetToFitDocumentViewAnimated:YES];
-	[[CPRunLoop currentRunLoop] limitDateForMode:CPDefaultRunLoopMode];
 	
 }
 
 - (void) resizeSheetToFitDocumentViewAnimated:(BOOL)shouldAnimate {
-	
-	if (!contentView) return;
-
-//	Width: the document view, or window width - 128px, the smaller, but larger than the minimum width, 384px
-	
-	var MINIMAL_SHEET_WIDTH = 384;
-	var MINIMAL_SHEET_HEIGHT = 0;
-
-	var documentWrapperViewFrame = [contentWrapperView frame];		
-	var documentViewFrame = [contentView frame];
-	if (!documentViewFrame) documentViewFrame = CGRectMake(0, 0, 384, 384);
-
-
-//	The maximum allowed frame is a visually spacious maximum for really large document views
 		
-	var windowFrame = [[self window] frame];
+	if (!contentView) return;
+		
+	var currentWindowSize = ([[self window] frame]).size;
 	var platformWindowFrame = [[[self window] platformWindow] visibleFrame];
-
-	maximumAllowedWidth = platformWindowFrame.size.width - 128;
-	maximumAllowedHeight = platformWindowFrame.size.height - 32;
+	var platformWindowSize = platformWindowFrame.size;
+	
+	var minimumSize = CGSizeMake(384, 384);
+	var maximumSize = CGSizeMake(platformWindowSize.width - 128, platformWindowSize.height - 32);
 
 	
 //	Suggest a frame that simply fits everything.  Notice the frame is not centered.
-	
-	var suggestedWidth = documentViewFrame.size.width;
-	var suggestedHeight = windowFrame.size.height + (documentViewFrame.size.height - documentWrapperViewFrame.size.height);
-	
+		
+	var preferredSize;
 	if (contentWantsFullLayout) {
 		
-		suggestedWidth = maximumAllowedWidth;
-		suggestedHeight = maximumAllowedHeight;
+		preferredSize = maximumSize;
 		
-		[contentView setFrame:CGRectMake(0, 0, 
+	} else {
+	
+		preferredSize = [[[self window] contentView] preferredSizeWithContentView:contentView];
+		preferredSize = CGSizeMake(
+		
+			MAX(minimumSize.width, MIN(preferredSize.width, maximumSize.width)),
+			MAX(minimumSize.height, MIN(preferredSize.height, maximumSize.height))
 			
-			suggestedWidth, 
-			suggestedHeight - (windowFrame.size.height - documentViewFrame.size.height)
-			
-		)];
-		
-	//	Note that we do NOT set the autoresizing mask on the content view when it is set.
-	//	We let the scroll view do its magic
-		
+		);
+				
 	}
 	
-	var finalWidth = MIN(suggestedWidth, maximumAllowedWidth);
-	var finalHeight = MIN(suggestedHeight, maximumAllowedHeight);
-		
+	
 	var finalFrame = CGAlignedRectMake(
 	
-		CGRectMake(0, 0, finalWidth, finalHeight), kCGAlignmentPointRefTop,
+		CGRectMake(0, 0, preferredSize.width, preferredSize.height), kCGAlignmentPointRefTop,
 		platformWindowFrame, kCGAlignmentPointRefTop
 		
 	);
 	
-	[[CPRunLoop currentRunLoop] limitDateForMode:CPDefaultRunLoopMode];	
-		
+	[[[self window] contentView] setFrame:CGRectMake(0, 0, currentWindowSize.width, currentWindowSize.height)];
+	[[[self window] contentView] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 	[[self window] setFrame:finalFrame display:YES animate:shouldAnimate];
 	
 }
@@ -318,6 +301,22 @@
 	
 }
 
+- (CGSize) preferredSizeWithContentView:(CPView)inContentView {
+
+	var preferredWidth = 0, preferredHeight = 0;
+
+	if (headerView)
+	preferredHeight += CGRectGetHeight([headerView frame]);
+	
+	preferredWidth += CGRectGetWidth([inContentView frame]);
+	preferredHeight += CGRectGetHeight([inContentView frame]);
+	
+	if (footerView)
+	preferredHeight += CGRectGetHeight([footerView frame]);
+
+	return CGSizeMake(preferredWidth, preferredHeight);
+	
+}
 
 - (void) layoutSubviews {
 	
@@ -327,7 +326,7 @@
 		totalHeight = CGRectGetHeight([self frame]), 
 		headerViewHeight = headerView ? CGRectGetHeight([headerView frame]) : 0,
 		footerViewHeight = footerView ? CGRectGetHeight([footerView frame]) : 0;
-	
+		
 	if (headerView) [headerView setFrame:CGRectMake(
 		
 		0, 
@@ -354,9 +353,7 @@
 		footerViewHeight
 		
 	)];
-	
-	[[CPRunLoop currentRunLoop] limitDateForMode:CPDefaultRunLoopMode];
-	
+		
 }
 
 @end
@@ -390,10 +387,13 @@
 - (void) parentWindowDidResize:(CPNotification)inNotification {
 	
 	if (![self parentWindow]) return;
-	
-//	TODO: Perhaps handle additional resizing work here
 
-	[self setFrameOrigin:CGPointMake((CGRectGetWidth([[self parentWindow] frame]) - CGRectGetWidth([self frame])) / 2,  0)];
+	[self setFrameOrigin:CGPointMake(
+		
+		(CGRectGetWidth([[self parentWindow] frame]) - CGRectGetWidth([self frame])) / 2,  
+		0
+		
+	)];
 	
 	[_windowController resizeSheetToFitDocumentViewAnimated:NO];
 	
