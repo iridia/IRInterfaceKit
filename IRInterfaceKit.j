@@ -6,6 +6,7 @@
 //	Dependencies
 	
 	@import <CPColor+IRAdditions/CPColor+IRAdditions.j>
+	@import <CPData+IRAdditions/CPData+IRAdditions.j>	
 	
 	
 	
@@ -40,9 +41,11 @@
 	@import "IRGenericBar.j"
 	@import "IRIndicatorBar.j"
 	@import "IRIndicatorBarElement.j"
-
+	
+	
 //	Text Fields
 
+	@import "IRTextField.j"
 	@import "IRDarkTextField.j"
 	@import "IRDarkSearchField.j"
 
