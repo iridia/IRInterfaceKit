@@ -78,6 +78,7 @@
 
 //	Interactivity
 
+	@import "IRProcuratingViewController.j"
 	@import "IRSelectableToolbar.j"
 	@import "IRMouseView.j"
 	@import "IRImageView.j"
