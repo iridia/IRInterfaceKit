@@ -40,12 +40,6 @@
 
 
 
-var	_IRImageAndTextViewTruncateTailBinding = [CPString stringWithFormat:
-	
-		"url(%@#delimitText)", 
-		[[CPBundle bundleForClass:[IRTextField class]] pathForResource:@"IRMozillaBindings.xml"]
-			
-	];
 
 @implementation _IRImageAndTextView : _CPImageAndTextView
 
@@ -53,16 +47,85 @@ var	_IRImageAndTextViewTruncateTailBinding = [CPString stringWithFormat:
 
 	[super layoutSubviews];
 	
-	var textStyle = (!!_DOMTextElement) ? _DOMTextElement.style : nil;
-	if (!textStyle) return;
-	
-	if (textStyle)
-	textStyle.MozBinding = (textStyle.textOverflow == "ellipsis") ? _IRImageAndTextViewTruncateTailBinding : "";
-
-	var shadowStyle = (!!_DOMTextShadowElement) ? _DOMTextShadowElement.style : nil;
-
-	if (shadowStyle)
-	shadowStyle.MozBinding = (shadowStyle.textOverflow == "ellipsis") ? _IRImageAndTextViewTruncateTailBinding : "";
+	if (_lineBreakMode != CPLineBreakByTruncatingHead)
+	if (_lineBreakMode != CPLineBreakByTruncatingMiddle)
+	if (_lineBreakMode != CPLineBreakByTruncatingTail)
+	return;
+		
+	if (!_DOMTextElement)
+	return;
+		
+		
+	var	textStyle = (_DOMTextElement && _DOMTextElement.style) || nil,
+		
+		intFromPixels = function (inString) {
+		
+			return parseInt(inString.replace(/px/, ""), 10);
+		
+		},
+		
+		sizeOfString = function (inString) {
+			
+			return [CPPlatformString sizeOfString:inString withFont:_font forWidth:NULL];
+			
+		},
+		
+		textRectSize = CGSizeMake(
+			
+			intFromPixels(textStyle.width), intFromPixels(textStyle.height)
+			
+		),
+		
+		stringSize = sizeOfString(_text);
+		
+		
+	var shouldTruncate = !!(stringSize.width > textRectSize.width);
+	if (!shouldTruncate) return;
+		
+		
+	var	ellipsisSize = sizeOfString(@"…"),
+		
+		allowedStringWidth = textRectSize.width - ellipsisSize.width,
+		
+		stringFits = function (inString) {
+			
+			return !!( ((sizeOfString(inString)).width + ellipsisSize.width) <= allowedStringWidth );
+			
+		},
+		
+		finalString = _text;
+		
+		
+	switch (_lineBreakMode) {
+		
+	case CPLineBreakByTruncatingMiddle:
+	case CPLineBreakByTruncatingHead:
+	case CPLineBreakByTruncatingTail:
+		
+		while (!stringFits(finalString))
+		if (finalString.length != 0)
+		finalString = finalString.substring(0, finalString.length - 1);
+		
+		finalString = (finalString == "") ? _text : (finalString + "…");
+		
+	}
+		
+	var assignText = function (inElement, inString) {
+		
+		if (CPFeatureIsCompatible(CPJavascriptInnerTextFeature)) {
+			
+			inElement.innerText = inString;
+			
+		} else if (CPFeatureIsCompatible(CPJavascriptTextContentFeature)) {
+			
+			inElement.textContent = inString;
+		
+		}
+		
+	}
+		
+	if (_DOMTextElement) assignText(_DOMTextElement, finalString);
+	if (_DOMTextShadowElement) assignText(_DOMTextShadowElement, finalString);
 	
 }
 
