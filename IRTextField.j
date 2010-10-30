@@ -85,28 +85,63 @@
 		
 	var	ellipsisSize = sizeOfString(@"…"),
 		
-		allowedStringWidth = textRectSize.width - ellipsisSize.width,
+		allowedStringWidth = textRectSize.width,
 		
 		stringFits = function (inString) {
-			
+		
 			return !!( ((sizeOfString(inString)).width + ellipsisSize.width) <= allowedStringWidth );
 			
-		},
-		
-		finalString = _text;
-		
-		
+		};
+			
 	switch (_lineBreakMode) {
 		
 	case CPLineBreakByTruncatingMiddle:
+	
+		var	prefixString = _text.substring(0, FLOOR(_text.length / 2)),
+			suffixString = _text.substring(prefixString.length, _text.length),
+			finalString = prefixString + "…" + suffixString,
+			trimmingPrefix = true;
+
+		while (!stringFits(finalString))
+		if (finalString.length != 0) {
+			
+			if (trimmingPrefix)
+			if (prefixString.length != 0)
+			prefixString = prefixString.substring(0, prefixString.length - 1);
+			
+			if (!trimmingPrefix)
+			if (suffixString.length != 0)
+			suffixString = suffixString.substring(1, suffixString.length);
+			
+			trimmingPrefix = !trimmingPrefix;
+			finalString = prefixString + "…" + suffixString;
+			
+		}
+
+		break;
+	
 	case CPLineBreakByTruncatingHead:
+	
+		var finalString = _text;
+
+		while (!stringFits(finalString))
+		if (finalString.length != 0)
+		finalString = finalString.substring(1, finalString.length);
+	
+		finalString = (finalString == "") ? _text : ("…" + finalString);
+	
+		break;
+
 	case CPLineBreakByTruncatingTail:
-		
+	
+		var finalString = _text;
+	
 		while (!stringFits(finalString))
 		if (finalString.length != 0)
 		finalString = finalString.substring(0, finalString.length - 1);
 		
 		finalString = (finalString == "") ? _text : (finalString + "…");
+		break;
 		
 	}
 		
