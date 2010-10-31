@@ -25,7 +25,9 @@
 		@selector(mouseView:didReceiveMouseDragEvent:), true,
 		@selector(mouseView:didReceiveMouseUpEvent:), true,
 		@selector(mouseView:didReceiveScrollWheelEvent:), true,
-		@selector(mouseView:didReceiveMouseMoveEvent:), true
+		@selector(mouseView:didReceiveMouseMoveEvent:), true,
+		@selector(mouseView:didReceiveMouseEnterEvent:), true,
+		@selector(mouseView:didReceiveMouseExitEvent:), true
 
 	];
 	
@@ -37,20 +39,30 @@
 
 - (void) irSetDelegate:(id)delegateCandidate {
 	
-	[super irSetDelegate:delegateCandidate];	
+	[super irSetDelegate:delegateCandidate];
 	
 }
 
 - (void) mouseDown:(CPEvent)event {
-	
+
 	if ([[self delegate] respondsToSelector:@selector(mouseView:didReceiveMouseDownEvent:)])
 	[[self delegate] mouseView:self didReceiveMouseDownEvent:event];
 	
 }
 
+- (void) mouseEntered:(CPEvent)event {
+	
+	if ([[self delegate] respondsToSelector:@selector(mouseView:didReceiveMouseEnterEvent:)])
+	[[self delegate] mouseView:self didReceiveMouseEnterEvent:event];
+	
+}
 
-
-
+- (void) mouseExited:(CPEvent)event {
+	
+	if ([[self delegate] respondsToSelector:@selector(mouseView:didReceiveMouseExitEvent:)])
+	[[self delegate] mouseView:self didReceiveMouseExitEvent:event];
+	
+}
 
 - (void) mouseMoved:(CPEvent)event {
 
@@ -59,10 +71,6 @@
 	
 }
 
-
-
-
-
 - (void) mouseDragged:(CPEvent)event {
 		
 	if ([[self delegate] respondsToSelector:@selector(mouseView:didReceiveMouseDragEvent:)])
@@ -70,20 +78,12 @@
 	
 }
 
-
-
-
-
 - (void) mouseUp:(CPEvent)event {
 	
 	if ([[self delegate] respondsToSelector:@selector(mouseView:didReceiveMouseUpEvent:)])
 	[[self delegate] mouseView:self didReceiveMouseUpEvent:event];
 	
 }
-
-
-
-
 
 - (void)scrollWheel:(CPEvent)event {
 	
