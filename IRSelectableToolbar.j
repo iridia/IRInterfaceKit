@@ -144,15 +144,10 @@
 	
 - (void) tile {
 	
-	CPLog(@"tile is called when selectedItem is %@", selectedItem);
-	
 	[super tile];
 	
-	if (selectedItem) {
-
-		[self yieldBackdropForItem:selectedItem];
-	
-	}
+	if (selectedItem)
+	[self yieldBackdropForItem:selectedItem];
 	
 }
 
