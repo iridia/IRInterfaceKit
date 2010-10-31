@@ -185,9 +185,13 @@
 		
 	} else {
 		
+		[contentView setFrameOrigin:CGPointMake(0, 0)];
 		[contentView setAutoresizingMask:null];
 		
 	}
+	
+	[contentView setNeedsLayout];
+	[contentWrapperView setNeedsLayout];
 	
 }
 
