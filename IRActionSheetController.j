@@ -41,6 +41,10 @@
 	[[self window] setContentView:[[IRActionSheetLayoutView alloc] initWithFrame:CGRectMakeZero()]];
 	[[self window] setHasShadow:NO];
 	[[self window]._windowView setClipsToBounds:NO];
+
+		
+		// [[[self window] contentView] setAlphaValue:0.5];	
+		// [[self window] setHasShadow:YES];
 	
 	
 	backdropView = [[IRBeigeBox alloc] initWithFrame:CGRectMake(0, -32, 512, 512 + 32)];
@@ -212,14 +216,15 @@
 }
 
 - (void) resizeSheetToFitDocumentViewAnimated:(BOOL)shouldAnimate {
-		
+	
 	if (!contentView) return;
 		
 	var currentWindowSize = ([[self window] frame]).size;
+	
 	var platformWindowFrame = [[[self window] platformWindow] visibleFrame];
 	var platformWindowSize = platformWindowFrame.size;
 	
-	var minimumSize = CGSizeMake(384, 384);
+	var minimumSize = CGSizeMake(384, 96);
 	var maximumSize = CGSizeMake(platformWindowSize.width - 128, platformWindowSize.height - 32);
 
 	
@@ -231,8 +236,8 @@
 		preferredSize = maximumSize;
 		
 	} else {
-	
-		preferredSize = [[[self window] contentView] preferredSizeWithContentView:contentView];
+		
+		preferredSize = [[[self window] contentView] preferredSizeWithContentView:contentView];		
 		preferredSize = CGSizeMake(
 		
 			MAX(minimumSize.width, MIN(preferredSize.width, maximumSize.width)),
@@ -249,7 +254,7 @@
 		platformWindowFrame, kCGAlignmentPointRefTop
 		
 	);
-	
+
 	[[[self window] contentView] setFrame:CGRectMake(0, 0, currentWindowSize.width, currentWindowSize.height)];
 	[[[self window] contentView] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
 	[[self window] setFrame:finalFrame display:YES animate:shouldAnimate];
@@ -317,7 +322,7 @@
 	
 	if (footerView)
 	preferredHeight += CGRectGetHeight([footerView frame]);
-
+	
 	return CGSizeMake(preferredWidth, preferredHeight);
 	
 }
