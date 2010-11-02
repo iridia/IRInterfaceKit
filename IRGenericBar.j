@@ -1,4 +1,4 @@
-//	IRGenericBar.backdrop
+//	IRGenericBar.j
 	
 @import <CGGeometry+IRAdditions/CGGeometry+IRAdditions.j>
 @import "CPView+IRInterfaceKitAdditions.j"
