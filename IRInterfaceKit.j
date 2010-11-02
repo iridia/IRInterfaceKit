@@ -69,6 +69,7 @@
 	@import "IRPlasticyPopUpButton.j"
 	@import "IRButtonBar.j"
 	@import "IRStripedBar.j"
+	@import "IRToolbarCompanionBar.j"
 
 
 //	Windows
