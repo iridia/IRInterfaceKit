@@ -2,17 +2,13 @@
 	
 @import <CGGeometry+IRAdditions/CGGeometry+IRAdditions.j>
 @import "CPView+IRInterfaceKitAdditions.j"
-@import "IRStyledView.j"
+@import "IRButtonBar.j"
 
 
 
 
 
-@implementation IRGenericBar : IRStyledView {
-
-
-
-}
+@implementation IRGenericBar : IRButtonBar 
 
 
 
