@@ -43,10 +43,10 @@
 	[self setValue:[CPNull null] forThemeAttribute:@"knob-slot-color"];
 	
 	[self setValue:CGSizeMake(8.0, 8.0) forThemeAttribute:@"increment-line-size"];
-//	[self setValue:CGSizeMake(0.0, 0.0) forThemeAttribute:@"increment-line-size" inState:CPThemeStateVertical];
+	[self setValue:CGSizeMake(8.0, 4.0) forThemeAttribute:@"increment-line-size" inState:CPThemeStateVertical];
 	
 	[self setValue:CGSizeMake(8.0, 8.0) forThemeAttribute:@"decrement-line-size"];
-//	[self setValue:CGSizeMake(0.0, 0.0) forThemeAttribute:@"decrement-line-size" inState:CPThemeStateVertical];
+	[self setValue:CGSizeMake(8.0, 4.0) forThemeAttribute:@"decrement-line-size" inState:CPThemeStateVertical];
 	
 	[self setValue:[CPNull null] forThemeAttribute:@"increment-line-color"];
 	[self setValue:[CPNull null] forThemeAttribute:@"decrement-line-color"];
