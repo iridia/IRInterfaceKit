@@ -247,7 +247,7 @@
 	
 		inFrame.origin.x - 16,
 		inFrame.origin.y,
-		inFrame.size.width,
+		inFrame.size.width + 32,
 		48
 		
 	)];

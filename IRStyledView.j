@@ -26,9 +26,11 @@
 
 	backgroundView = [[CPView alloc] initWithFrame:fullFrame];
 	[self addSubview:backgroundView];
+	[backgroundView setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
 	[backgroundView setHitTests:NO];
 
 	contentView = [[CPView alloc] initWithFrame:fullFrame];	
+	[contentView setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
 	[self addSubview:contentView];
 	
 	[self setClipsToBounds:NO];
