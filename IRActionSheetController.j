@@ -238,13 +238,14 @@
 	} else {
 		
 		preferredSize = [[[self window] contentView] preferredSizeWithContentView:contentView];		
+		
 		preferredSize = CGSizeMake(
 		
 			MAX(minimumSize.width, MIN(preferredSize.width, maximumSize.width)),
 			MAX(minimumSize.height, MIN(preferredSize.height, maximumSize.height))
 			
 		);
-				
+	
 	}
 	
 	
@@ -257,7 +258,9 @@
 
 	[[[self window] contentView] setFrame:CGRectMake(0, 0, currentWindowSize.width, currentWindowSize.height)];
 	[[[self window] contentView] setAutoresizingMask:CPViewWidthSizable|CPViewHeightSizable];
-	[[self window] setFrame:finalFrame display:YES animate:shouldAnimate];
+
+	[[self window] setFrame:finalFrame display:YES animate:NO];
+//	[[[self window] contentView] setFrame:CGRectMake(0, 0, finalFrame.size.width, finalFrame.size.height)];
 	
 }
 
