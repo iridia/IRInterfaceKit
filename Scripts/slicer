@@ -32,8 +32,8 @@ slice IRTactileDoneButton.backdrop.disabled.png 20 20 20 20
 
 slice IRBeigeBox.backdrop.png 24 24 24 24
 
-slice IRDarkTextField.backdrop.png 12 12 12 12
-slice IRDarkTextField.backdrop.active.png 12 12 12 12
+slice IRDarkTextField.backdrop.png 8 8 8 8
+slice IRDarkTextField.backdrop.active.png 8 8 8 8
 
 slice IRCautionBox.backdrop.overlay.png 20 20 20 20
 #     IRCautionBox.backdrop.stripes.png is a pattern image
