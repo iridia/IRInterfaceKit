@@ -231,49 +231,6 @@
 	
 }
 
-- (void) setView:(CPView)aView {
-
-	var	originalTarget = _target, 
-		originalAction = _action;
-
-	[super setView:aView];
-	[self setTarget:_target];
-	[self setAction:_action];
-	
-}
-
-- (id) target {
-
-	if (_view) return ([_view respondsToSelector:@selector(target)] ? [_view target] : _target) || _target;
-	return _target;
-	
-}
-
-- (void) setTarget:(id)inTarget {
-
-	if ([_view respondsToSelector:@selector(setTarget:)]) 
-	return [_view setTarget:inTarget];
-	
-	_target = inTarget;
-
-}
-
-- (SEL) action {
-
-	if (_view) return ([_view respondsToSelector:@selector(action)] ? [_view action] : _action) || _action;
-	return _action;
-	
-}
-
-- (void) setAction:(id)inAction {
-
-	if ([_view respondsToSelector:@selector(setAction:)]) 
-	return [_view setAction:inAction];
-	
-	_action = inAction;
-
-}
-
 @end
 
 
