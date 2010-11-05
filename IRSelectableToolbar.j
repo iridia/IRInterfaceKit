@@ -291,6 +291,12 @@
 
 }
 
+- (CPToolbarItem) toolbarItem {
+	
+	return _toolbarItem;
+	
+}
+
 @end
 
 
