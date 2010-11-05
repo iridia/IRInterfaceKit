@@ -87,6 +87,8 @@ slice IRDarkPopUpButton.backdrop.png 0 24 0 8
 slice IRDarkPopUpButton.backdrop.active.png 0 24 0 8
 slice IRDarkPopUpButton.backdrop.disabled.png 0 24 0 8
 
+slice IRDarkerBeigeBox.backdrop.png 24 24 24 24
+
 
 
 
