@@ -23,6 +23,12 @@
 	
 }
 
++ (CPImage) imageNamed:(CPString)imageName size:(CGSize)size inBundleOf:(id)sender {
+
+	return [[[self class] alloc] initWithContentsOfFile:[[CPBundle bundleForClass:[sender class]] pathForResource:imageName] size:size];
+	
+}
+
 @end
 
 

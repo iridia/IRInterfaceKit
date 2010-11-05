@@ -70,6 +70,11 @@
 	@import "IRButtonBar.j"
 	@import "IRStripedBar.j"
 	@import "IRToolbarCompanionBar.j"
+	
+	
+//	Radios	
+	
+	@import "IRDarkRadio.j"
 
 
 //	Windows
