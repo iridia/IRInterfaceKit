@@ -38,4 +38,16 @@
 
 }
 
++ (IRDarkTextField) miniTextFieldWithStringValue:(CPString)aStringValue placeholder:(CPString)aPlaceholder width:(float)aWidth {
+	
+	var textField = [IRDarkTextField textFieldWithStringValue:aStringValue placeholder:aPlaceholder width:aWidth];
+	[textField setFrame:CGRectMake(0.0, 0.0, aWidth, 24.0)];
+	
+	[textField setValue:[CPFont systemFontOfSize:11.0] forThemeAttribute:@"font"];	
+	[textField setValue:CGInsetMake(0, 4, 0, 4) forThemeAttribute:@"content-inset"];
+	[textField setValue:CGInsetMake(1, 4, 0, 4) forThemeAttribute:@"content-inset" inState:CPThemeStateEditing];
+	
+	return textField;
+
+}
 @end

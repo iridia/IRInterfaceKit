@@ -83,6 +83,10 @@ slice IRPlasticySquareButton.backdrop.disabled.png 16 16 16 16
 
 slice IRSelectableToolbar.item.backdrop.active.png 0 32 0 32
 
+slice IRDarkPopUpButton.backdrop.png 0 24 0 8
+slice IRDarkPopUpButton.backdrop.active.png 0 24 0 8
+slice IRDarkPopUpButton.backdrop.disabled.png 0 24 0 8
+
 
 
 

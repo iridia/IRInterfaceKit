@@ -28,7 +28,7 @@
 	[self setValue:img(@"disabled.backdrop") forThemeAttribute:@"image" inState:CPThemeStateDisabled];
 	[self setValue:img(@"selected.disabled.backdrop") forThemeAttribute:@"image" inState:CPThemeStateSelected|CPThemeStateDisabled];
 	
-	[self setValue:8.0 forThemeAttribute:@"image-offset"];
+	[self setValue:4.0 forThemeAttribute:@"image-offset"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"content-inset"];
 	[self setValue:CGInsetMake(0, 0, 0, 0) forThemeAttribute:@"bezel-inset"];
 	
