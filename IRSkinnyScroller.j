@@ -51,6 +51,7 @@
 	[self setValue:[CPNull null] forThemeAttribute:@"increment-line-color"];
 	[self setValue:[CPNull null] forThemeAttribute:@"decrement-line-color"];
 
+	[self setInvertedColor:NO];
 	  
 	return self;
 	
