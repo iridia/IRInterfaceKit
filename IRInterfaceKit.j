@@ -91,6 +91,7 @@
 	@import "IRMouseView.j"
 	@import "IRImageView.j"
 	@import "IRActionSheetController.j"
+	@import "IRSplitView.j"
 	
 	
 //	LPKit Spawn
