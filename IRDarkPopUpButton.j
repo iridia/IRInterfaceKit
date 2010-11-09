@@ -49,7 +49,6 @@
 
 + (id) buttonWithTitle:(CPString)inTitle {
 
-	CPLog(@"kIRDarkDefaultPopUpButtonStyle is %@", kIRDarkDefaultPopUpButtonStyle);
 	return [self buttonWithTitle:inTitle style:kIRDarkDefaultPopUpButtonStyle];
 
 }
