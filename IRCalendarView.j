@@ -61,8 +61,66 @@
 	
 }
 
+- (id)initWithFrame:(CGRect)aFrame {
+
+	self = [super initWithFrame:aFrame]; if (!self) return nil;
+
+        fullSelection = [nil, nil];
+
+        var bounds = [self bounds];
+	[self setClipsToBounds:NO];
+
+	[headerView removeFromSuperview];
+        headerView = [[IRCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds), 40)];
+        [[headerView prevButton] setTarget:self];
+        [[headerView prevButton] setAction:@selector(didClickPrevButton:)];
+        [[headerView nextButton] setTarget:self];
+        [[headerView nextButton] setAction:@selector(didClickNextButton:)];
+        [self addSubview:headerView];
+
+	[slideView removeFromSuperview];
+        slideView = [[LPSlideView alloc] initWithFrame:CGRectMake(0, 40, CGRectGetWidth(bounds), CGRectGetHeight(bounds) - 40)];
+        [slideView setSlideDirection:LPSlideViewVerticalDirection];
+        //[slideView setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable | CPViewMinYMargin];
+        [slideView setDelegate:self];
+        [slideView setAnimationCurve:CPAnimationEaseOut];
+        [slideView setAnimationDuration:0.2];
+        [self addSubview:slideView];
+
+	[bezelView removeFromSuperview];
+	bezelView = [[CPView alloc] initWithFrame:[slideView frame]];
+	[bezelView setHitTests:NO];
+	[self addSubview:bezelView positioned:CPWindowBelow relativeTo:nil];
+
+	[firstMonthView removeFromSuperview];
+        firstMonthView = [[LPCalendarMonthView alloc] initWithFrame:[slideView bounds] calendarView:self];
+        [firstMonthView setDelegate:self];
+        [slideView addSubview:firstMonthView];
+
+	[secondMonthView removeFromSuperview];
+        secondMonthView = [[LPCalendarMonthView alloc] initWithFrame:[slideView bounds] calendarView:self];
+        [secondMonthView setDelegate:self];
+        [slideView addSubview:secondMonthView];
+
+        currentMonthView = firstMonthView;
+
+        // Default to today's date.
+        [self setMonth:[CPDate date]];
+
+        [self setNeedsLayout];
+
+	return self;
+
+}
+
 @end
 
 
 
 
+
+@implementation IRCalendarHeaderView : LPCalendarHeaderView
+
+
+
+@end
