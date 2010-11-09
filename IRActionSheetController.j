@@ -118,6 +118,8 @@
 	
 	var sheetHostingWindow = [inNotification object];
 	
+	[[_CPMenuManager sharedMenuManager] completeTracking];
+	
 	if (!sheetHostingWindow._irShadeWindow) return;
 	
 	var backgroundAnimation = [[LPViewAnimation alloc] initWithViewAnimations:[{
