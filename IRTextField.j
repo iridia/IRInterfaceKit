@@ -12,19 +12,33 @@
 
 - (void) setFrameSize:(CGSize)inSize {
 	
-	if (!inSize || isNaN(inSize.width) || isNaN(inSize.height))
-	return;
+	var	realSize = inSize,
+		minSize = [self currentValueForThemeAttribute:@"min-size"],
+		maxSize = [self currentValueForThemeAttribute:@"max-size"],
+		font = [self currentValueForThemeAttribute:@"font"];
 	
-	var realSize = inSize, minSize = null, maxSize = null;
+	if (!inSize || isNaN(inSize.width) || isNaN(inSize.height)) {
+		
+		if (!minSize) {
+		
+			realSize = [CPPlatformString sizeOfString:[self stringValue] withFont:font forWidth:null];
+		
+		} else {
+			
+			realSize = minSize;
+			
+		}
+		
+	}
 	
-	if (minSize = [self currentValueForThemeAttribute:@"min-size"]) {
+	if (minSize) {
 	
 		if (minSize.width >= 0.0) realSize.width = MAX(realSize.width, minSize.width);
 		if (minSize.height >= 0.0) realSize.height = MAX(realSize.height, minSize.height);
 	
 	}
 
-	if (maxSize = [self currentValueForThemeAttribute:@"max-size"]) {
+	if (maxSize) {
 
 		if (maxSize.width >= 0.0) realSize.width = MIN(realSize.width, maxSize.width);
 		if (maxSize.height >= 0.0) realSize.height = MIN(realSize.height, maxSize.height);
@@ -33,7 +47,7 @@
 	
 	[super setFrameSize:realSize];
 	[self layoutSubviews];
-	
+
 }
 
 - (CPView) createEphemeralSubviewNamed:(CPString)aName {
