@@ -70,7 +70,7 @@
 	var associatedViewController = [[self delegate] viewControllerClassForToolbarItemWithIdentifier:[item itemIdentifier]];
 	
 	if ([self selectedViewControllerClass] == associatedViewController) return;
-		
+	
 	[self setSelectedViewControllerClass:associatedViewController];
 
 //	Nudge the toolbar view handlerhere
@@ -104,11 +104,12 @@
 	
 	if ([inItem isKindOfClass:[CPMenuItem class]]) {
 		
-		var itemIndexInMenu = [[[_toolbarView additionalItemsButton] itemArray] indexOfObject:inItem] - 1;
+		var itemIndexInMenu = [[[_toolbarView additionalItemsButton] itemArray] indexOfObject:inItem];
+		
 		var itemsToMatch = [[_toolbarView invisibleItems] mutableCopy];
 		var enumerator = [[_toolbarView invisibleItems] objectEnumerator], object = nil;
 		
-		if (itemIndexInMenu == -2)
+		if (itemIndexInMenu <= -1)
 		return nil;
 		
 		while (object = [enumerator nextObject])
