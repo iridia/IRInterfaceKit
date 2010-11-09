@@ -15,6 +15,8 @@
 	
 	IRDarkPopUpButtonStyle style;
 	
+	id delegate @accessors;
+	
 }
 
 
@@ -92,6 +94,19 @@
 	[button setClipsToBounds:NO];
 	
 	return button;
+	
+}
+
+- (void) synchronizeTitleAndSelectedItem {
+
+	[super synchronizeTitleAndSelectedItem];
+	
+	var selectedItem = [self selectedItem];
+
+	if (!selectedItem) return;
+	
+	if ([delegate respondsToSelector:@selector(popUpButton:didSelectItem:)])
+	[delegate popUpButton:self didSelectItem:selectedItem];
 	
 }
 
