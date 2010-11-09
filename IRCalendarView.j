@@ -25,7 +25,7 @@
 	[calendarView setValue:bezelColor forThemeAttribute:@"bezel-color"];
 	[calendarView setValue:CGInsetMake(-16, -16, -16, -16) forThemeAttribute:@"bezel-inset"];
 
-	[calendarView setValue:[CPColor greenColor] forThemeAttribute:@"header-background-color" inState:CPThemeStateNormal];
+	[calendarView setValue:[CPColor clearColor] forThemeAttribute:@"header-background-color" inState:CPThemeStateNormal];
 	[calendarView setValue:[CPFont boldSystemFontOfSize:11.0] forThemeAttribute:@"header-font" inState:CPThemeStateNormal];
 	[calendarView setValue:[CPColor colorWithHexString:@"333"] forThemeAttribute:@"header-text-color" inState:CPThemeStateNormal];
 	[calendarView setValue:[CPColor whiteColor] forThemeAttribute:@"header-text-shadow-color" inState:CPThemeStateNormal];
