@@ -118,6 +118,7 @@
 	
 	var sheetHostingWindow = [inNotification object];
 	
+	if (CPApp._activeMenu != nil)
 	[[_CPMenuManager sharedMenuManager] completeTracking];
 	
 	if (!sheetHostingWindow._irShadeWindow) return;
