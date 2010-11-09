@@ -7,20 +7,21 @@
 
 
 
-@implementation IRSplitView : CPSplitView {
-	
-	float initialSidebarWidth @accessors;
-	
-}
+@implementation IRSplitView : CPSplitView
 
 - (void) resizeSubviewsWithOldSize:(CPSize)oldSize {
 
 	[super resizeSubviewsWithOldSize:oldSize];	
 	
-	if (!!initialSidebarWidth)
-	if (_subviews[0])
-	if ([_subviews[0] frame].size.width > initialSidebarWidth)
-	[self setPosition:initialSidebarWidth ofDividerAtIndex:0];
+	if (_subviews[0]) {
+		
+		var	max = [self maxPossiblePositionOfDividerAtIndex:0],
+			min = [self minPossiblePositionOfDividerAtIndex:0],
+			current = [_subviews[0] frame].size.width;
+
+			[self setPosition:MIN(max, MAX(min, current)) ofDividerAtIndex:0];
+	
+	}
 	
 }
 
