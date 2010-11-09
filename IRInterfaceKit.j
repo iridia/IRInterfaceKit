@@ -93,6 +93,8 @@
 	@import "IRActionSheetController.j"
 	@import "IRSplitView.j"
 	
+	@import "IRValueTransformers.j"
+	
 	
 //	LPKit Spawn
 	
