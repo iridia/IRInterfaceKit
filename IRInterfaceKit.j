@@ -26,6 +26,7 @@
 	@import "IRRecessedInnerShadowedView.j"
 	@import "IRRecessedLightInnerShadowedView.j"
 	@import "IRBeigeBox.j"
+	@import "IRDarkerBeigeBox.j"
 	@import "IRBubbleBox.j"
 	@import "IRYellowBox.j"
 	@import "IRCautionBox.j"
@@ -47,6 +48,7 @@
 
 	@import "IRTextField.j"
 	@import "IRDarkTextField.j"
+	@import "IRDarkMultiLineTextField.j"
 	@import "IRDarkSearchField.j"
 
 
