@@ -71,7 +71,8 @@
 	[self setClipsToBounds:NO];
 
 	[headerView removeFromSuperview];
-        headerView = [[IRCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds), 40)];
+        headerView = [[IRCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds), 32)];
+[headerView setBackgroundColor:[CPColor blueColor]];
         [[headerView prevButton] setTarget:self];
         [[headerView prevButton] setAction:@selector(didClickPrevButton:)];
         [[headerView nextButton] setTarget:self];
@@ -79,7 +80,7 @@
         [self addSubview:headerView];
 
 	[slideView removeFromSuperview];
-        slideView = [[LPSlideView alloc] initWithFrame:CGRectMake(0, 40, CGRectGetWidth(bounds), CGRectGetHeight(bounds) - 40)];
+        slideView = [[LPSlideView alloc] initWithFrame:CGRectMake(0, 32, CGRectGetWidth(bounds), CGRectGetHeight(bounds) - 40)];
         [slideView setSlideDirection:LPSlideViewVerticalDirection];
         //[slideView setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable | CPViewMinYMargin];
         [slideView setDelegate:self];
