@@ -35,6 +35,7 @@
 	@import "IREmperorBox.j"
 	@import "IRBlueyStrip.j"
 	@import "IRThickBlueyStrip.j"
+	@import "IRShallowBox.j"
 
 
 //	Bars
