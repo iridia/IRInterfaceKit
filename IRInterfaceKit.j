@@ -85,6 +85,7 @@
 //	Windows
 		
 	@import "IROverlayFullPlatformWindow.j"
+	@import "IRHUDAlert.j"
 	
 
 //	Interactivity
