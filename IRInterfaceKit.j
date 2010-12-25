@@ -98,6 +98,8 @@
 	@import "IRSplitView.j"
 	
 	@import "IRValueTransformers.j"
+
+	@import "IRMenuItem.j"
 	
 	@import "IRCalendarAndTimeListView.j"
 	
